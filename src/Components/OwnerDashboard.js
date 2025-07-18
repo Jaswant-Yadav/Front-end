@@ -19,23 +19,49 @@ const OwnerDashboard = () => {
         fetchVenues();
     }, []);
 
-    const addVenue = async () => {
-        let result = await axios.post('https://back-end-barl.onrender.com/api/venues', {
-            name,
-            location,
-            capacity: parseInt(capacity),
-            unavailableDates: blockDate ? [blockDate] : [],
-        }, {
-            withCredentials: true,
-        });
+  const addVenue = async () => {
+  // Basic validation for required fields
+  if (!name.trim() || !location.trim() || !capacity) {
+    alert("Please fill in all required fields (Name, Location, Capacity).");
+    return;
+  }
 
-        setName('');
-        setLocation('');
-        setCapacity('');
-        setBlockDate('')
-        fetchVenues();
-        console.log(result);
-    };
+  const parsedCapacity = parseInt(capacity, 10);
+
+  if (isNaN(parsedCapacity) || parsedCapacity <= 0) {
+    alert("Capacity must be a valid positive number.");
+    return;
+  }
+
+  try {
+    const result = await axios.post(
+      "https://back-end-barl.onrender.com/api/venues",
+      {
+        name: name.trim(),
+        location: location.trim(),
+        capacity: parsedCapacity,
+        unavailableDates: blockDate ? [blockDate] : [],
+      },
+      {
+        withCredentials: true,
+      }
+    );
+
+    // Clear inputs on success
+    setName("");
+    setLocation("");
+    setCapacity("");
+    setBlockDate("");
+    fetchVenues();
+    console.log(result);
+  } catch (error) {
+    console.error("Error adding venue:", error.response?.data || error.message);
+    alert(
+      "Failed to add venue: " +
+        (error.response?.data?.message || error.message)
+    );
+  }
+};
 
 
 
