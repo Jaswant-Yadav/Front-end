@@ -63,8 +63,6 @@ const OwnerDashboard = () => {
   }
 };
 
-
-
     return (
         <div className='owner'>
             <h2>Owner Dashboard</h2>
