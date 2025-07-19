@@ -18,7 +18,8 @@ const AdminDashboard = () => {
   };
 
   const deleteVenue = async (id) => {
-    let result = await fetch(`https://back-end-barl.onrender.com/api/venues/delete/${id}`, {
+    let result = await fetch(`https://back-end-barl.onrender.com/api/venues/${id}`, {
+
       method: "DELETE",
       headers: { "Content-Type": "application/json" }
     });
