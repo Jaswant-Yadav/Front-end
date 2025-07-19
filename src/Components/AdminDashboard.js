@@ -120,6 +120,8 @@ const AdminDashboard = () => {
       ) : (
         <p>No venues found</p>
       )}
+
+      <button><a href='/'>Logout</a></button>
     </div>
   );
 };

@@ -104,6 +104,8 @@ const OwnerDashboard = () => {
                     <p>No venues found</p>
                 )}
             </div>
+
+            <button><a href='/'>Logout</a></button>
         </div>
     );
 };
