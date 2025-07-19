@@ -18,14 +18,25 @@ const AdminDashboard = () => {
   };
 
   const deleteVenue = async (id) => {
-    let result = await fetch(`https://back-end-barl.onrender.com/api/venues/${id}`, {
-
+  try {
+    const response = await fetch(`https://back-end-barl.onrender.com/api/venues/${id}`, {
       method: "DELETE",
       headers: { "Content-Type": "application/json" }
     });
-    result = await result.json();
+
+    if (!response.ok) {
+      const errorText = await response.text(); // get raw message if not JSON
+      console.error('Delete failed:', errorText);
+      return;
+    }
+
+    const result = await response.json();
     if (result) getVenues();
-  };
+  } catch (err) {
+    console.error("Delete error:", err.message);
+  }
+};
+
 
   const blockDate = async () => {
     if (!selectedVenue || !newDate) return alert("Select venue and date");
