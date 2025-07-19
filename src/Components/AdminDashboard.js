@@ -18,24 +18,24 @@ const AdminDashboard = () => {
   };
 
   const deleteVenue = async (id) => {
-  try {
-    const response = await fetch(`https://back-end-barl.onrender.com/api/venues/${id}`, {
-      method: "DELETE",
-      headers: { "Content-Type": "application/json" }
-    });
+    try {
+      const response = await fetch(`https://back-end-barl.onrender.com/api/venues/${id}`, {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" }
+      });
 
-    if (!response.ok) {
-      const errorText = await response.text(); // get raw message if not JSON
-      console.error('Delete failed:', errorText);
-      return;
+      if (!response.ok) {
+        const errorText = await response.text(); // get raw message if not JSON
+        console.error('Delete failed:', errorText);
+        return;
+      }
+
+      const result = await response.json();
+      if (result) getVenues();
+    } catch (err) {
+      console.error("Delete error:", err.message);
     }
-
-    const result = await response.json();
-    if (result) getVenues();
-  } catch (err) {
-    console.error("Delete error:", err.message);
-  }
-};
+  };
 
 
   const blockDate = async () => {
@@ -120,7 +120,7 @@ const AdminDashboard = () => {
       ) : (
         <p>No venues found</p>
       )}
-
+      <br /><br />
       <button><a href='/'>Logout</a></button>
     </div>
   );
